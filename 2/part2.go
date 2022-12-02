@@ -9,11 +9,11 @@ import (
 func myScore(elfMove int, result int) int {
 	switch result {
 	case 0: // loss
-		return (elfMove-1+3)%3 + 0 // rotate left
+		return 1 + (elfMove-1+3)%3 + 0 // rotate left
 	case 1: // draw
-		return elfMove + 3
+		return 1 + elfMove + 3
 	default: // win
-		return (elfMove+1)%3 + 6 // rotate right
+		return 1 + (elfMove+1)%3 + 6 // rotate right
 	}
 }
 
@@ -26,8 +26,8 @@ func main() {
 	score := 0
 	for scanner.Scan() {
 		s := scanner.Text()
-		elfMove := int(s[0] - 65 + 1) // 1 rock, 2 paper, 3 scissor
-		result := int(s[2] - 88)      // 0 loss, 1 draw, 2 win
+		elfMove := int(s[0]) - 65 // 1 rock, 2 paper, 3 scissor
+		result := int(s[2]) - 88  // 0 loss, 1 draw, 2 win
 		score += myScore(elfMove, result)
 	}
 	fmt.Println(score)
