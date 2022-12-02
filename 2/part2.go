@@ -6,17 +6,15 @@ import (
 	"os"
 )
 
-var scores = [3]int{1, 2, 3}
-
 func myScore(elfMove int, result int) int {
-	if result == 1 { // draw
-		return scores[elfMove] + 3
+	switch result {
+	case 0: // loss
+		return (elfMove-1+3)%3 + 0 // rotate left
+	case 1: // draw
+		return elfMove + 3
+	default: // win
+		return (elfMove+1)%3 + 6 // rotate right
 	}
-	if result == 2 { // win
-		return scores[(elfMove+1)%3] + 6 // rotate right
-	}
-	// loss
-	return scores[(elfMove-1+3)%3] + 0 // rotate left
 }
 
 func main() {
@@ -28,7 +26,7 @@ func main() {
 	score := 0
 	for scanner.Scan() {
 		s := scanner.Text()
-		elfMove := int(s[0] - 65)
+		elfMove := int(s[0] - 65 + 1) // 1 Rock, 2 Paper, 3 Scissor
 		result := int(s[2] - 88)
 		score += myScore(elfMove, result)
 	}
