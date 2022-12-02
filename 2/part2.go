@@ -26,8 +26,8 @@ func main() {
 	score := 0
 	for scanner.Scan() {
 		s := scanner.Text()
-		elfMove := int(s[0] - 65 + 1) // 1 Rock, 2 Paper, 3 Scissor
-		result := int(s[2] - 88)
+		elfMove := int(s[0] - 65 + 1) // 1 rock, 2 paper, 3 scissor
+		result := int(s[2] - 88)      // 0 loss, 1 draw, 2 win
 		score += myScore(elfMove, result)
 	}
 	fmt.Println(score)
