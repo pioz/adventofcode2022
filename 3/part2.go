@@ -6,11 +6,11 @@ import (
 	"os"
 )
 
-func priority(r byte) int {
+func priority(r rune) int32 {
 	if r > 90 {
-		return int(r - 97)
+		return r - 97
 	}
-	return int(r - 65 + 26)
+	return r - 65 + 26
 }
 
 func main() {
@@ -19,12 +19,12 @@ func main() {
 		panic(err)
 	}
 	scanner := bufio.NewScanner(file)
-	sum := 0
+	var sum int32
 	found := [52]byte{}
 	for i := 0; scanner.Scan(); i++ {
 		s := scanner.Text()
 		for j := range s {
-			p := priority(s[j])
+			p := priority(rune(s[j]))
 			found[p] |= 1 << (i % 3) // 000 | 001 | 010 | 100 = 111 => 7
 			if found[p] == 7 {
 				sum += p + 1
