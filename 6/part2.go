@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-const startOfPacketSize = 14
+const windowSize = 14
 
 var freqTable [256]rune
 
@@ -21,7 +21,7 @@ func main() {
 	var (
 		i              = 0
 		sameCharacters = 0
-		mem            [startOfPacketSize]rune
+		mem            [windowSize]rune
 	)
 
 	for scanner.Scan() {
@@ -30,8 +30,8 @@ func main() {
 		if freqTable[c] == 2 {
 			sameCharacters++
 		}
-		if i >= startOfPacketSize-1 { // skip till window is full
-			old := mem[i%startOfPacketSize] // first time is 0, but is ok
+		if i >= windowSize-1 { // skip till window is full
+			old := mem[i%windowSize] // first time is 0, but is ok
 			freqTable[old]--
 			if freqTable[old] == 1 {
 				sameCharacters--
@@ -40,7 +40,7 @@ func main() {
 				break
 			}
 		}
-		mem[i%startOfPacketSize] = c
+		mem[i%windowSize] = c
 		i++
 	}
 	fmt.Println(i + 1)
