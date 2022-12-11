@@ -91,6 +91,7 @@ func main() {
 		}
 	}
 
+	// Calculate Least Common Multiple
 	lcm := 1
 	for i := 0; i < len(monkeys); i++ {
 		lcm *= monkeys[i].Divide
