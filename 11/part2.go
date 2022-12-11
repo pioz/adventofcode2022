@@ -91,15 +91,15 @@ func main() {
 		}
 	}
 
-	modulo := 1
+	lcm := 1
 	for i := 0; i < len(monkeys); i++ {
-		modulo *= monkeys[i].Divide
+		lcm *= monkeys[i].Divide
 	}
 
 	for i := 0; i < 10000; i++ {
 		for j := 0; j < len(monkeys); j++ {
 			for _, level := range monkeys[j].Items {
-				new := monkeys[j].Exec(level) % monkeys[j].Divide
+				new := monkeys[j].Exec(level) % lcm
 				var to int
 				if new%monkeys[j].Divide == 0 {
 					to = monkeys[j].True
