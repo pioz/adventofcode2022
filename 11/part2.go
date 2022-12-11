@@ -99,7 +99,7 @@ func main() {
 	for i := 0; i < 10000; i++ {
 		for j := 0; j < len(monkeys); j++ {
 			for _, level := range monkeys[j].Items {
-				new := monkeys[j].Exec(level) % modulo
+				new := monkeys[j].Exec(level) % monkeys[j].Divide
 				var to int
 				if new%monkeys[j].Divide == 0 {
 					to = monkeys[j].True
