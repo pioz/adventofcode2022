@@ -12,7 +12,7 @@ func main() {
 	}
 	scanner := bufio.NewScanner(file)
 
-	for i := 0; scanner.Scan(); i++ {
+	for scanner.Scan() {
 		s := scanner.Text()
 	}
 }
