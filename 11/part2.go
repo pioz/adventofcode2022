@@ -18,26 +18,27 @@ var regexp5 = regexp.MustCompile(`^    If false: throw to monkey (\d+)$`)
 var opRegexp = regexp.MustCompile(`^new = old ([\+\*]) (.*)$`)
 
 type Monkey struct {
-	Items      []int
+	Items      []int64
 	Op         string
-	Divide     int
+	Divide     int64
 	True       int
 	False      int
 	Inspection int
 }
 
-func (m *Monkey) Exec(level int) int {
+func (m *Monkey) Exec(level int64) int64 {
 	tokens := opRegexp.FindAllStringSubmatch(m.Op, -1)
 	if tokens == nil {
 		panic("invalid operation")
 	}
-	var value int
+	var value int64
 	op := tokens[0][1]
 	sValue := tokens[0][2]
 	if sValue == "old" {
 		value = level
 	} else {
-		value, _ = strconv.Atoi(sValue)
+		v, _ := strconv.Atoi(sValue)
+		value = int64(v)
 	}
 	switch op {
 	case "+":
@@ -68,7 +69,7 @@ func main() {
 			tokens := regexp1.FindAllStringSubmatch(s, -1)
 			for _, v := range strings.Split(tokens[0][1], ", ") {
 				level, _ := strconv.Atoi(v)
-				monkeys[idx].Items = append(monkeys[idx].Items, level)
+				monkeys[idx].Items = append(monkeys[idx].Items, int64(level))
 			}
 		case 2:
 			tokens := regexp2.FindAllStringSubmatch(s, -1)
@@ -76,7 +77,7 @@ func main() {
 		case 3:
 			tokens := regexp3.FindAllStringSubmatch(s, -1)
 			v, _ := strconv.Atoi(tokens[0][1])
-			monkeys[idx].Divide = v
+			monkeys[idx].Divide = int64(v)
 		case 4:
 			tokens := regexp4.FindAllStringSubmatch(s, -1)
 			v, _ := strconv.Atoi(tokens[0][1])
@@ -92,7 +93,7 @@ func main() {
 	}
 
 	// Calculate Least Common Multiple
-	lcm := 1
+	lcm := int64(1)
 	for i := 0; i < len(monkeys); i++ {
 		lcm *= monkeys[i].Divide
 	}
@@ -110,7 +111,7 @@ func main() {
 				monkeys[to].Items = append(monkeys[to].Items, new)
 				monkeys[j].Inspection++
 			}
-			monkeys[j].Items = []int{}
+			monkeys[j].Items = []int64{}
 		}
 	}
 
